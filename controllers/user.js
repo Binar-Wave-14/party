@@ -19,7 +19,7 @@ const viewLogin = (req, res) => {
 const createRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    console.log(req.body)
     if (!email) {
       throw {
         message: `email must be valid`,
