@@ -19,7 +19,7 @@ const viewLogin = (req, res) => {
 const createRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     if (!email) {
       throw {
         message: `email must be valid`,
@@ -68,5 +68,59 @@ const createRegister = async (req, res, next) => {
     next(error);
   }
 };
+const createLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(req.body);
+    if (!email) {
+      throw {
+        message: `email must be valid`,
+        code: 400,
+        error: `bad request`,
+      };
+    }
 
-module.exports = { viewRegister, viewLogin, createRegister };
+    if (!password || password.length < 8) {
+      throw {
+        message: `password min length 8 character`,
+        code: 400,
+        error: `bad request`,
+      };
+    }
+
+    const isExist = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!isExist) {
+      throw {
+        message: `User Not Found`,
+        code: 404,
+        error: `bad request`,
+      };
+    }
+
+    const isMatch = await bcrypt.compare(password, isExist.password);
+
+    if (!isMatch) {
+      throw {
+        message: `Wrong Password`,
+        code: 404,
+        error: `bad request`,
+      };
+    }
+
+    const token = await createToken(isExist.id);
+
+    return res.status(201).json({
+      msg: "success create user",
+      token: `bearer ${token}`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { viewRegister, viewLogin, createRegister, createLogin };
