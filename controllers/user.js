@@ -16,6 +16,14 @@ const viewLogin = (req, res) => {
   return res.render("login");
 };
 
+const viewDashboard = (req, res) => {
+  return res.render("dashboard");
+};
+
+const viewDorms = (req, res) => {
+  return res.render("dorms");
+};
+
 const createRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -123,4 +131,4 @@ const createLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { viewRegister, viewLogin, createRegister, createLogin };
+module.exports = { viewRegister, viewLogin, viewDashboard, viewDorms, createRegister, createLogin };
