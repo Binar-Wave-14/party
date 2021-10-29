@@ -23,27 +23,15 @@
               </tr>
             </thead>
             <tbody>
+                <% dorms.forEach((dorm, index) => { %>
               <tr>
-                <th scope="row">1</th>
-                <td>Mawar</td>
-                <td>Bogor</td>
-                <td>Indra</td>
-                <td>AC, TV 65 Inc, Dapur, Sofa, Kasur</td>
+                <th scope="row"><%= index+1 %></th>
+                <td><%= dorm.name %></td>
+                <td><%= dorm.address %></td>
+                <td><%= dorm.owner %></td>
+                <td><%= dorm.facilities.join(', ') %></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Melati</td>
-                <td>Jakarta</td>
-                <td>Maslul</td>
-                <td>AC, TV 65 Inc, Dapur, Sofa, Kasur</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Puri Asri</td>
-                <td>Jakarta</td>
-                <td>Alex</td>
-                <td>AC, TV 65 Inc, Dapur, Sofa, Kasur</td>
-              </tr>
+              <% })%>
             </tbody>
           </table>
     </div>

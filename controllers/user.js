@@ -17,8 +17,12 @@ const viewLogin = (req, res) => {
   return res.render("login");
 };
 
-const viewDashboard = (req, res) => {
-  return res.render("dashboard");
+const viewDashboard = async (req, res) => {
+  const dorms = await  Dorms.findAll()
+  
+  return res.render("dashboard", {
+    dorms
+  });
 };
 
 const viewDorms = (req, res) => {
@@ -81,11 +85,7 @@ const createRegister = async (req, res, next) => {
 
     const token = await createToken(user.id);
 
-    return res.status(201).json({
-      msg: "success create user",
-      user,
-      token: `bearer ${token}`,
-    });
+    return res.status(301).redirect('/login');
   } catch (error) {
     next(error);
   }
@@ -136,10 +136,7 @@ const createLogin = async (req, res, next) => {
 
     const token = await createToken(isExist.id);
 
-    return res.status(201).json({
-      msg: "success create user",
-      token: `bearer ${token}`,
-    });
+    return res.status(301).redirect('/dashboard');
   } catch (error) {
     next(error);
   }
