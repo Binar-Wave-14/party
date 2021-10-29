@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/users.model");
+const Dorms = require("../models/dorms.model");
 
 const { APP_SECRET } = process.env;
 
@@ -24,6 +25,19 @@ const viewDorms = (req, res) => {
   return res.render("dorms");
 };
 
+const createDorm = async (req, res) => {
+  const { name, address, owner, facilities } = req.body;
+  const arrOfFacilities = facilities.split(',')
+
+  await Dorms.create({
+    name,
+    address,
+    owner,
+    facilities: arrOfFacilities,
+  });
+
+  return res.status(301).redirect('/dashboard')
+}
 const createRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -131,4 +145,4 @@ const createLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { viewRegister, viewLogin, viewDashboard, viewDorms, createRegister, createLogin };
+module.exports = { viewRegister, viewLogin, viewDashboard, viewDorms, createRegister, createLogin, createDorm };

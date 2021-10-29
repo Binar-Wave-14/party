@@ -10,5 +10,6 @@ routers.get("/dashboard/dorms", controller.viewDorms);
 
 routers.post("/create-user", controller.createRegister);
 routers.post("/create-login", controller.createLogin);
+routers.post("/create-dorm", controller.createDorm);
 
 module.exports = routers;
